@@ -1,26 +1,142 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary-50: #EAF1F8;
+  --primary-100: #CFE0EF;
+  --primary-200: #9DC0DE;
+  --primary-300: #6B9FCB;
+  --primary-400: #3F7CAE;
+  --primary-500: #235C8C;
+  --primary-600: #123A63;
+  --primary-700: #0D2B4A;
+  --primary-800: #091E35;
+  --primary-900: #061524;
+
+  --n-50: #F4F7F9;
+  --n-100: #E7EDF1;
+  --n-200: #D3DDE4;
+  --n-300: #B3C2CD;
+  --n-400: #8397A6;
+  --n-500: #55697A;
+  --n-700: #2E4351;
+  --n-900: #101E27;
+  --surface: #FFFFFF;
+
+  --open: #2F6FA8;
+  --open-t: #EAF1F8;
+  --progress: #8A5A00;
+  --progress-t: #FAF0DC;
+  --waiting: #6B4E9E;
+  --waiting-t: #F0EBF8;
+  --resolved: #1F6B45;
+  --resolved-t: #E7F2EC;
+  --reopened: #A64A14;
+  --reopened-t: #FBEDE4;
+  --closed: #55697A;
+  --closed-t: #EDF1F3;
+  --danger: #A32020;
+  --danger-t: #FBEAEA;
+  --accent: #F0B429;
+
+  --r-card: 8px;
+  --r-ctl: 6px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-public-sans), system-ui, sans-serif;
+
+  --color-primary-50: var(--primary-50);
+  --color-primary-100: var(--primary-100);
+  --color-primary-200: var(--primary-200);
+  --color-primary-300: var(--primary-300);
+  --color-primary-400: var(--primary-400);
+  --color-primary-500: var(--primary-500);
+  --color-primary-600: var(--primary-600);
+  --color-primary-700: var(--primary-700);
+  --color-primary-800: var(--primary-800);
+  --color-primary-900: var(--primary-900);
+
+  --color-n-50: var(--n-50);
+  --color-n-100: var(--n-100);
+  --color-n-200: var(--n-200);
+  --color-n-300: var(--n-300);
+  --color-n-400: var(--n-400);
+  --color-n-500: var(--n-500);
+  --color-n-700: var(--n-700);
+  --color-n-900: var(--n-900);
+  --color-surface: var(--surface);
+
+  --color-open: var(--open);
+  --color-open-tint: var(--open-t);
+  --color-progress: var(--progress);
+  --color-progress-tint: var(--progress-t);
+  --color-waiting: var(--waiting);
+  --color-waiting-tint: var(--waiting-t);
+  --color-resolved: var(--resolved);
+  --color-resolved-tint: var(--resolved-t);
+  --color-reopened: var(--reopened);
+  --color-reopened-tint: var(--reopened-t);
+  --color-closed: var(--closed);
+  --color-closed-tint: var(--closed-t);
+  --color-danger: var(--danger);
+  --color-danger-tint: var(--danger-t);
+  --color-accent: var(--accent);
+
+  --radius-card: var(--r-card);
+  --radius-ctl: var(--r-ctl);
+
+  --container-page: 1100px;
+  --container-form: 640px;
+
+  --text-page-title: 34px;
+  --text-page-title--line-height: 40px;
+  --text-page-title--font-weight: 700;
+  --text-section-title: 26px;
+  --text-section-title--line-height: 32px;
+  --text-section-title--font-weight: 700;
+  --text-card-title: 21px;
+  --text-card-title--line-height: 28px;
+  --text-card-title--font-weight: 600;
+  --text-body: 17px;
+  --text-body--line-height: 27px;
+  --text-secondary: 15px;
+  --text-secondary--line-height: 22px;
+  --text-meta: 13px;
+  --text-meta--line-height: 18px;
+  --text-meta--font-weight: 600;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--n-50);
+    color: var(--n-900);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 27px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--primary-400);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--primary-100);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
