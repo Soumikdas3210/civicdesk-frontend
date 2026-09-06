@@ -106,6 +106,8 @@
   --text-meta: 13px;
   --text-meta--line-height: 18px;
   --text-meta--font-weight: 600;
+
+  --breakpoint-app: 900px;
 }
 
 @layer base {
