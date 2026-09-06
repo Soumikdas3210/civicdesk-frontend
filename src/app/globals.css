@@ -36,6 +36,7 @@
   --closed-t: #EDF1F3;
   --danger: #A32020;
   --danger-t: #FBEAEA;
+  --danger-700: #851A1A;
   --accent: #F0B429;
 
   --r-card: 8px;
@@ -80,6 +81,7 @@
   --color-closed-tint: var(--closed-t);
   --color-danger: var(--danger);
   --color-danger-tint: var(--danger-t);
+  --color-danger-700: var(--danger-700);
   --color-accent: var(--accent);
 
   --radius-card: var(--r-card);

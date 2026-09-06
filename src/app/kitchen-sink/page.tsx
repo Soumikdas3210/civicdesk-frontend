@@ -1,3 +1,12 @@
+"use client";
+
+import Button from "@/components/ui/Button";
+import Field from "@/components/ui/Field";
+import Input from "@/components/ui/Input";
+import Select from "@/components/ui/Select";
+import Spinner from "@/components/ui/Spinner";
+import Textarea from "@/components/ui/Textarea";
+
 const PRIMARY = [
   ["--primary-50", "selected row, information panel"],
   ["--primary-100", "badge fill"],
@@ -130,6 +139,96 @@ export default function KitchenSinkPage() {
             <span className={cls}>Report a problem in your neighbourhood</span>
           </div>
         ))}
+      </Section>
+
+            <Section title="Buttons">
+        <div className="flex flex-wrap items-center gap-3">
+          <Button>Submit complaint</Button>
+          <Button variant="secondary">Cancel</Button>
+          <Button variant="danger">Delete department</Button>
+          <Button variant="ghost">Clear filters</Button>
+        </div>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <Button loading>Submit complaint</Button>
+          <Button variant="secondary" loading>
+            Cancel
+          </Button>
+          <Button disabled>Submit complaint</Button>
+          <Button variant="secondary" disabled>
+            Cancel
+          </Button>
+          <Button variant="danger" disabled>
+            Delete department
+          </Button>
+          <Button variant="ghost" disabled>
+            Clear filters
+          </Button>
+        </div>
+        <p className="mt-4 max-w-form text-secondary text-n-500">
+          Every button is at least 44px tall. Labels say what happens, never OK
+          or Submit.
+        </p>
+      </Section>
+
+      <Section title="Form fields">
+        <div className="max-w-form">
+          <Field
+            label="Title"
+            help="A short summary an officer can scan in a list."
+            required
+          >
+            <Input placeholder="Street light out on Bijoy Sarani" />
+          </Field>
+
+          <Field
+            label="Title"
+            help="A short summary an officer can scan in a list."
+            error="Please make the title at least 5 characters so officers can find it."
+            required
+          >
+            <Input defaultValue="Bro" />
+          </Field>
+
+          <Field label="Ward" required>
+            <Select defaultValue="">
+              <option value="" disabled>
+                Choose a ward
+              </option>
+              <option>Ward 12, Tejgaon</option>
+              <option>Ward 19, Gulshan</option>
+            </Select>
+          </Field>
+
+          <Field
+            label="Ward"
+            error="Please choose the ward where the problem is."
+            required
+          >
+            <Select defaultValue="">
+              <option value="" disabled>
+                Choose a ward
+              </option>
+            </Select>
+          </Field>
+
+          <Field
+            label="Description"
+            help="What is wrong, where exactly, and how long it has been like that."
+            required
+          >
+            <Textarea placeholder="The light outside house 42 has been off for two weeks." />
+          </Field>
+
+          <Field label="Tracking code">
+            <Input defaultValue="CD-2026-0912-4471" disabled />
+          </Field>
+        </div>
+      </Section>
+
+      <Section title="Loading">
+        <div className="rounded-card border border-n-200 bg-surface">
+          <Spinner label="Loading complaints" />
+        </div>
       </Section>
 
       <Section title="Shape and focus">
