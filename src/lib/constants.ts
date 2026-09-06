@@ -68,3 +68,12 @@ export function statusLabel(
     ? STATUS_LABEL_CITIZEN[status]
     : STATUS_LABEL[status];
 }
+
+export const STATUS_RAIL: Record<GrievanceStatus, string> = {
+  OPEN: "bg-open",
+  IN_PROGRESS: "bg-progress",
+  WAITING_ON_CITIZEN: "bg-waiting",
+  RESOLVED: "bg-resolved",
+  REOPENED: "bg-reopened",
+  CLOSED: "bg-closed",
+};
