@@ -142,3 +142,24 @@
     scroll-behavior: auto !important;
   }
 }
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+dialog[open] {
+  animation: modal-in 200ms ease-out;
+}
+
+dialog[open]::backdrop {
+  animation: backdrop-in 200ms ease-out;
+}

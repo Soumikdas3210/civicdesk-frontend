@@ -6,6 +6,16 @@ import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import Spinner from "@/components/ui/Spinner";
 import Textarea from "@/components/ui/Textarea";
+import { useState } from "react";
+import Badge from "@/components/ui/Badge";
+import Card from "@/components/ui/Card";
+import ConfirmDialog from "@/components/ui/ConfirmDialog";
+import EmptyState from "@/components/ui/EmptyState";
+import ErrorState from "@/components/ui/ErrorState";
+import Modal from "@/components/ui/Modal";
+import Pagination from "@/components/ui/Pagination";
+import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/Table";
+import { ToastProvider, useToast } from "@/components/ui/Toast";
 
 const PRIMARY = [
   ["--primary-50", "selected row, information panel"],
@@ -78,7 +88,12 @@ function Section({
   );
 }
 
-export default function KitchenSinkPage() {
+function KitchenSink() {
+  const { showToast } = useToast();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [page, setPage] = useState(1);
+
   return (
     <main className="mx-auto max-w-page px-6 py-12">
       <h1 className="text-page-title">Kitchen sink</h1>
@@ -231,6 +246,146 @@ export default function KitchenSinkPage() {
         </div>
       </Section>
 
+            <Section title="Badges">
+        <div className="flex flex-wrap items-center gap-3">
+          <Badge tone="open" dot>
+            Open
+          </Badge>
+          <Badge tone="progress" dot>
+            In progress
+          </Badge>
+          <Badge tone="waiting" dot>
+            Waiting for your reply
+          </Badge>
+          <Badge tone="resolved" dot>
+            Resolved
+          </Badge>
+          <Badge tone="reopened" dot>
+            Reopened
+          </Badge>
+          <Badge tone="closed" dot>
+            Closed
+          </Badge>
+        </div>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <Badge tone="closed">Low</Badge>
+          <Badge tone="open">Medium</Badge>
+          <Badge tone="progress">High</Badge>
+          <Badge tone="danger">Urgent</Badge>
+        </div>
+      </Section>
+
+      <Section title="Card and table">
+        <Card className="mb-6 max-w-form">
+          <h3 className="text-card-title">Officer handling this</h3>
+          <p className="mt-1 text-secondary text-n-500">
+            Karim Ahmed, Public Works, Ward 12
+          </p>
+        </Card>
+
+        <Table>
+          <THead>
+            <TR>
+              <TH>Category</TH>
+              <TH>Department</TH>
+              <TH>Status</TH>
+              <TH>Complaints</TH>
+            </TR>
+          </THead>
+          <TBody>
+            <TR>
+              <TD>Street lighting</TD>
+              <TD>Public Works</TD>
+              <TD>
+                <Badge tone="resolved">Active</Badge>
+              </TD>
+              <TD>34</TD>
+            </TR>
+            <TR>
+              <TD>Illegal parking</TD>
+              <TD>Traffic</TD>
+              <TD>
+                <Badge tone="closed">Retired</Badge>
+              </TD>
+              <TD>9</TD>
+            </TR>
+          </TBody>
+        </Table>
+
+        <Pagination page={page} limit={20} total={137} onPageChange={setPage} />
+      </Section>
+
+      <Section title="Empty and error states">
+        <div className="grid gap-6 md:grid-cols-2">
+          <EmptyState
+            title="No complaints yet"
+            description="When you report a problem it will appear here with a tracking code."
+            action={<Button>Report a problem</Button>}
+          />
+          <ErrorState
+            message="We could not reach the server. Check that it is running and try again."
+            action={<Button variant="secondary">Try again</Button>}
+          />
+        </div>
+      </Section>
+
+      <Section title="Modal, confirmation and toast">
+        <div className="flex flex-wrap items-center gap-3">
+          <Button onClick={() => setModalOpen(true)}>Open a modal</Button>
+          <Button variant="danger" onClick={() => setConfirmOpen(true)}>
+            Delete department
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => showToast("Your reply has been sent", "success")}
+          >
+            Success toast
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() =>
+              showToast("We could not save that. Please try again.", "error")
+            }
+          >
+            Error toast
+          </Button>
+        </div>
+
+        <Modal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          title="Move to a different category"
+          description="This also moves the complaint to that category's department and recalculates the deadlines."
+          footer={
+            <>
+              <Button variant="secondary" onClick={() => setModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={() => setModalOpen(false)}>Save change</Button>
+            </>
+          }
+        >
+          <Field label="Category" required>
+            <Select defaultValue="">
+              <option value="" disabled>
+                Choose a category
+              </option>
+              <option>Street lighting</option>
+              <option>Drainage</option>
+            </Select>
+          </Field>
+        </Modal>
+
+        <ConfirmDialog
+          open={confirmOpen}
+          title="Delete Public Works?"
+          description="This department has 3 officers and 41 complaints. This cannot be undone."
+          confirmLabel="Delete department"
+          onCancel={() => setConfirmOpen(false)}
+          onConfirm={() => setConfirmOpen(false)}
+        />
+      </Section>
+
       <Section title="Shape and focus">
         <div className="flex flex-wrap items-center gap-4">
           <div className="rounded-card border border-n-200 bg-surface p-4 text-secondary">
@@ -248,5 +403,13 @@ export default function KitchenSinkPage() {
         </div>
       </Section>
     </main>
+  ); 
+}
+
+export default function KitchenSinkPage() {
+  return (
+    <ToastProvider>
+      <KitchenSink />
+    </ToastProvider>
   );
 }
