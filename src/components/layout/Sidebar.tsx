@@ -4,12 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
 import { NAV } from "@/lib/roles";
-import { useCurrentRole } from "@/lib/session";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
-  const role = useCurrentRole();
+  const { data: user } = useCurrentUser();
   const pathname = usePathname();
-  const items = NAV[role];
+
+  if (!user) return null;
+
+  const items = NAV[user.role];
 
   return (
     <nav aria-label="Sections" className="p-3">

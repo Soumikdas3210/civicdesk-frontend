@@ -13,6 +13,7 @@ http.interceptors.response.use(
 
     if (status === 401 && !onAuthPage && typeof window !== "undefined") {
       void fetch("/api/session", { method: "DELETE" }).then(() => {
+        // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- a hard navigation is intended. It discards all in-memory React state, which is correct when the previous session has just expired.
         window.location.href = `/login?next=${encodeURIComponent(path)}`;
       });
     }

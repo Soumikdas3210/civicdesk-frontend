@@ -1,6 +1,6 @@
 "use client";
 
-import { useCurrentRole } from "@/lib/session";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 import type { Role } from "@/lib/roles";
 
 type RoleGateProps = {
@@ -14,6 +14,6 @@ export default function RoleGate({
   fallback = null,
   children,
 }: RoleGateProps) {
-  const role = useCurrentRole();
-  return <>{allow.includes(role) ? children : fallback}</>;
+  const { data: user } = useCurrentUser();
+  return <>{user && allow.includes(user.role) ? children : fallback}</>;
 }

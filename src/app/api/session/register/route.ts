@@ -1,6 +1,4 @@
-import { cookies } from "next/headers";
 
-const COOKIE = "civicdesk_token";
 
 export async function POST(req: Request) {
   const res = await fetch(`${process.env.API_URL}/auth/register`, {
@@ -17,15 +15,7 @@ export async function POST(req: Request) {
     });
   }
 
-  if (data?.accessToken) {
-    (await cookies()).set(COOKIE, data.accessToken, {
-      httpOnly: true,
-      sameSite: "strict",
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7,
-    });
-  }
+  
 
-  return Response.json({ ok: true });
+  return Response.json({ ok: true});
 }
