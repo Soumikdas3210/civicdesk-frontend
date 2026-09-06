@@ -1,7 +1,7 @@
 import type { Role } from "./roles";
 
  
-export const CURRENT_ROLE: Role = "ADMIN";
+export const CURRENT_ROLE: Role = "citizen";
 
 export const CURRENT_USER = {
   name: "Rina Akter",
