@@ -1,4 +1,4 @@
-export type Role = "CITIZEN" | "OFFICER" | "ADMIN";
+export type Role = "citizen" | "officer" | "admin";
 
 export type NavItem = {
   href: string;
@@ -6,16 +6,16 @@ export type NavItem = {
 };
 
 export const NAV: Record<Role, NavItem[]> = {
-  CITIZEN: [
+  citizen: [
     { href: "/grievances", label: "My complaints" },
     { href: "/grievances/new", label: "Report a problem" },
     { href: "/notifications", label: "Notifications" },
   ],
-  OFFICER: [
+  officer: [
     { href: "/grievances", label: "Complaints" },
     { href: "/notifications", label: "Notifications" },
   ],
-  ADMIN: [
+  admin: [
     { href: "/grievances", label: "Complaints" },
     { href: "/notifications", label: "Notifications" },
     { href: "/analytics", label: "Analytics" },
@@ -31,7 +31,7 @@ export const NAV: Record<Role, NavItem[]> = {
 };
 
 export const ROLE_LABEL: Record<Role, string> = {
-  CITIZEN: "Citizen",
-  OFFICER: "Officer",
-  ADMIN: "Admin",
+  citizen: "Citizen",
+  officer: "Officer",
+  admin: "Admin",
 };
