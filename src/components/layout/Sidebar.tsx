@@ -29,10 +29,10 @@ export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                 onClick={onNavigate}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex min-h-11 items-center rounded-ctl px-3 text-secondary font-semibold transition-colors duration-150",
+                  "relative flex min-h-11 items-center rounded-ctl px-3 text-secondary transition-colors duration-150",
                   active
-                    ? "bg-primary-50 text-primary-600"
-                    : "text-n-700 hover:bg-n-100",
+                    ? "bg-primary-100 font-bold text-primary-700 before:absolute before:left-0 before:top-1.5 before:bottom-1.5 before:w-1 before:rounded-full before:bg-primary-600"
+                    : "font-semibold text-n-700 hover:bg-n-100 hover:text-n-900",
                 )}
               >
                 {item.label}

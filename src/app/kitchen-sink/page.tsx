@@ -16,6 +16,9 @@ import Modal from "@/components/ui/Modal";
 import Pagination from "@/components/ui/Pagination";
 import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/Table";
 import { ToastProvider, useToast } from "@/components/ui/Toast";
+import GrievanceCard from "@/components/grievances/GrievanceCard";
+import TrackingCode from "@/components/grievances/TrackingCode";
+import type { Grievance } from "@/lib/types";
 
 const PRIMARY = [
   ["--primary-50", "selected row, information panel"],
@@ -59,6 +62,90 @@ const TYPE = [
   ["Body, 17 / 27, 400", "text-body"],
   ["Secondary, 15 / 22, 400", "text-secondary"],
   ["Label and meta, 13 / 18, 600", "text-meta"],
+];
+
+const WARD = { id: "w1", name: "Ward 7, Tejgaon", code: "W-07" };
+
+const CATEGORY = {
+  id: "c1",
+  name: "Street lighting",
+  description: null,
+  isActive: true,
+  departmentId: "d1",
+  department: { id: "d1", name: "Public Works", description: null },
+};
+
+function fixture(over: Partial<Grievance>): Grievance {
+  return {
+    id: "g1",
+    trackingCode: "GRV-2026-000005",
+    title: "Street light not working on Road 12",
+    description: "The light outside house 42 has been off for two weeks.",
+    status: "OPEN",
+    priority: "MEDIUM",
+    citizenId: "u1",
+    assignedOfficerId: null,
+    category: CATEGORY,
+    categoryId: "c1",
+    ward: WARD,
+    wardId: "w1",
+    responseDueAt: "2026-09-20T00:00:00.000Z",
+    resolutionDueAt: "2026-09-20T00:00:00.000Z",
+    firstRespondedAt: null,
+    resolvedAt: null,
+    waitingSince: null,
+    pausedMs: "0",
+    responseBreached: false,
+    resolutionBreached: false,
+    createdAt: "2026-09-01T00:00:00.000Z",
+    updatedAt: "2026-09-01T00:00:00.000Z",
+    tags: [],
+    ...over,
+  };
+}
+
+const CARDS: Grievance[] = [
+  fixture({}),
+  fixture({
+    id: "g2",
+    trackingCode: "GRV-2026-000006",
+    title: "Overflowing drain beside the school gate",
+    status: "IN_PROGRESS",
+    priority: "URGENT",
+    resolutionBreached: true,
+  }),
+  fixture({
+    id: "g3",
+    trackingCode: "GRV-2026-000007",
+    title: "Broken footpath slab near the mosque",
+    status: "WAITING_ON_CITIZEN",
+    priority: "LOW",
+    waitingSince: "2026-09-03T00:00:00.000Z",
+  }),
+  fixture({
+    id: "g4",
+    trackingCode: "GRV-2026-000008",
+    title: "Pothole outside the community clinic",
+    status: "RESOLVED",
+    priority: "HIGH",
+    resolvedAt: "2026-08-30T00:00:00.000Z",
+  }),
+  fixture({
+    id: "g5",
+    trackingCode: "GRV-2026-000009",
+    title:
+      "The streetlight at the corner of the market road has been flickering every night for the past three weeks and it is now completely dark",
+    status: "REOPENED",
+    priority: "MEDIUM",
+  }),
+  fixture({
+    id: "g6",
+    trackingCode: "GRV-2026-000010",
+    title: "Illegal parking blocking the alley",
+    status: "CLOSED",
+    priority: "LOW",
+    updatedAt: "2026-08-12T00:00:00.000Z",
+  }),
 ];
 
 function Swatch({ token, use }: { token: string; use: string }) {
@@ -401,6 +488,39 @@ function KitchenSink() {
             Tab to me to see the focus ring
           </button>
         </div>
+      </Section>
+
+            <Section title="Tracking code">
+        <div className="flex flex-wrap items-center gap-6">
+          <TrackingCode code="GRV-2026-000005" />
+          <TrackingCode code="GRV-2026-000005" size="lg" />
+        </div>
+        <p className="mt-4 max-w-form text-secondary text-n-500">
+          The signature element. Dashed border so it reads as a reference
+          number rather than a label. The large size is used once, on the
+          confirmation screen after submitting.
+        </p>
+      </Section>
+
+      <Section title="Grievance card, citizen view">
+        <div className="flex flex-col gap-3">
+          {CARDS.map((g) => (
+            <GrievanceCard key={g.id} grievance={g} role="citizen" />
+          ))}
+        </div>
+      </Section>
+
+      <Section title="Grievance card, officer view">
+        <div className="flex flex-col gap-3">
+          {CARDS.slice(2, 4).map((g) => (
+            <GrievanceCard key={g.id} grievance={g} role="officer" />
+          ))}
+        </div>
+        <p className="mt-4 max-w-form text-secondary text-n-500">
+          Same component. The waiting status reads &ldquo;Waiting on
+          citizen&rdquo; to staff and &ldquo;Waiting for your reply&rdquo; to
+          the person who filed it.
+        </p>
       </Section>
     </main>
   ); 
