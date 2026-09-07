@@ -5,4 +5,6 @@ export const qk = {
   messages: (id: string) => ["messages", id] as const,
   wards: ["wards"] as const,
   categories: ["categories"] as const,
+  departments: ["departments"] as const,
+  tags: ["tags"] as const,
 };
