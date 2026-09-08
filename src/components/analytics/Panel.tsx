@@ -28,7 +28,7 @@ export default function Panel({
       <h3 className="text-card-title">{title}</h3>
       <div className="mt-4">
         {isLoading ? (
-          <Spinner label={`Loading ${title.toLowerCase()}`} />
+          <Spinner label="Loading" />
         ) : isError ? (
           <div className="flex flex-col items-start gap-3">
             <p className="text-secondary text-n-500">
