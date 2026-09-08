@@ -104,3 +104,38 @@ export const TIMELINE_INDEX: Record<GrievanceStatus, number> = {
   RESOLVED: 2,
   CLOSED: 3,
 };
+
+type ActionConfirmation = {
+  title: string;
+  description: string;
+  confirmLabel: string;
+};
+
+export const ACTION_CONFIRM: Partial <
+  Record<GrievanceAction, ActionConfirmation>
+> = {
+  RESOLVE: {
+    title: "Mark this complaint as resolved?",
+    description:
+      "The person who reported it will be told it is fixed and asked to rate the service. They can reopen it if they disagree.",
+    confirmLabel: "Mark as resolved",
+  },
+  CLOSE: {
+    title: "Close this complaint?",
+    description:
+      "Closing is final. The person who reported it will no longer be able to reopen it.",
+    confirmLabel: "Close this complaint",
+  },
+  REOPEN: {
+    title: "Reopen this complaint?",
+    description:
+      "This tells the council the problem is not fixed. A new deadline is set from today and any rating you gave is removed.",
+    confirmLabel: "Reopen this complaint",
+  },
+  REQUEST_INFO: {
+    title: "Ask the citizen for information?",
+    description:
+      "The resolution clock pauses until they reply, and they will be notified that you need something from them.",
+    confirmLabel: "Ask for information",
+  },
+};

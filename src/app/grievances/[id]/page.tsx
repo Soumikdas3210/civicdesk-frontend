@@ -19,6 +19,7 @@ import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useGrievance } from "@/hooks/useGrievance";
 import { errorMessage } from "@/lib/errors";
 import MessageThread from "@/components/grievances/MessageThread";
+import StatusActions from "@/components/grievances/StatusActions";
 
 export default function GrievanceDetailPage() {
   const params = useParams<{ id: string }>();
@@ -79,6 +80,13 @@ export default function GrievanceDetailPage() {
         <StatusTimeline status={g.status} />
       </div>
 
+      {g.status === "CLOSED" && user.role === "citizen" && (
+        <p className="mb-6 rounded-ctl border border-n-200 bg-n-100 p-3 text-secondary text-n-700">
+          This complaint has been closed and cannot be reopened. If the problem
+          has come back, please report it as a new complaint.
+        </p>
+      )}
+
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
         <div className="min-w-0 space-y-6">
           <Card>
@@ -87,6 +95,12 @@ export default function GrievanceDetailPage() {
             </h3>
             <p className="whitespace-pre-wrap">{g.description}</p>
           </Card>
+          {g.availableActions && g.availableActions.length > 0 && (
+            <StatusActions
+              grievanceId={g.id}
+              actions={g.availableActions}
+            />
+          )}
           <MessageThread
             grievanceId={g.id}
             citizenId={g.citizenId}
