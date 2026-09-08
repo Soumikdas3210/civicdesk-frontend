@@ -26,6 +26,14 @@ export type Tag = {
   name: string;
 };
 
+export type SlaPolicy = {
+  id: string;
+  categoryId: string;
+  priority: Priority;
+  responseDueHours: number;
+  resolutionDueHours: number;
+};
+
 export type Grievance = {
   id: string;
   trackingCode: string;
