@@ -30,7 +30,11 @@ type AnalyticsBarChartProps = {
 
 export default function AnalyticsBarChart({ title, q }: AnalyticsBarChartProps) {
   const data = (q.data ?? [])
-    .map((row) => ({ name: row.name, total: Number(row.total ?? 0) }))
+    .map((row) => ({
+      id: row.id,
+      name: row.name,
+      total: Number(row.total ?? 0),
+    }))
     .sort((a, b) => b.total - a.total);
 
   const hasData = data.some((row) => row.total > 0);
@@ -49,32 +53,27 @@ export default function AnalyticsBarChart({ title, q }: AnalyticsBarChartProps) 
           layout="vertical"
           margin={{ top: 4, right: 32, bottom: 4, left: 8 }}
         >
-          <CartesianGrid horizontal={false} stroke="var(--color-n-100)" />
+          <CartesianGrid horizontal={false} />
           <XAxis
             type="number"
             allowDecimals={false}
-            tick={{ fontSize: 12 }}
-            stroke="var(--color-n-300)"
+            tick={{ className: "fill-n-500", fontSize: 12 }}
           />
           <YAxis
             type="category"
             dataKey="name"
             width={130}
-            tick={{ fontSize: 12 }}
-            stroke="var(--color-n-300)"
+            tick={{ className: "fill-n-900", fontSize: 12 }}
           />
-          <Tooltip
-            cursor={{ fill: "var(--color-n-100)" }}
-            labelStyle={{ color: "var(--color-n-900)" }}
-          />
+          <Tooltip />
           <Bar dataKey="total" className="fill-primary-500" radius={[0, 4, 4, 0]}>
             {data.map((row, index) => (
-              <Cell key={row.name} className={RAMP[index % RAMP.length]} />
+              <Cell key={row.id} className={RAMP[index % RAMP.length]} />
             ))}
             <LabelList
               dataKey="total"
               position="right"
-              style={{ fontSize: 12, fill: "var(--color-n-700)" }}
+              style={{ fontSize: 12, fill: "var(--color-n-900)" }}
             />
           </Bar>
         </BarChart>
