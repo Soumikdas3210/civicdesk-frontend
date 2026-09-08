@@ -7,4 +7,6 @@ export const qk = {
   categories: ["categories"] as const,
   departments: ["departments"] as const,
   tags: ["tags"] as const,
+  cannedResponses: ["cannedResponses"] as const,
+  escalationRules: ["escalationRules"] as const,
 };
