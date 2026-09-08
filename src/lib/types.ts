@@ -1,5 +1,40 @@
 import type { GrievanceStatus, Priority } from "./constants";
 
+export type AnalyticsOverview = {
+  byStatus: Record<GrievanceStatus, number>;
+  total: number;
+  openCount: number;
+  resolvedCount: number;
+  responseBreachRate: number;
+  resolutionBreachRate: number;
+};
+
+/** Raw SQL rows: counts come back as strings, averages as string or null. */
+export type OfficerStat = {
+  id: string;
+  fullName: string;
+  assigned: string;
+  resolved: string;
+  avgResolutionHours: string | null;
+  avgCsat: string | null;
+};
+
+/** `/analytics/{departments,categories,wards}` rows. `total` is a string. */
+export type NameTotalStat = {
+  id: string;
+  name: string;
+  total: string;
+};
+
+/** `/analytics/sla` rows. `department` is the name; counts are strings. */
+export type SlaBreachRow = {
+  department: string;
+  priority: Priority;
+  responseBreaches: string;
+  resolutionBreaches: string;
+  total: string;
+};
+
 export type Department = {
   id: string;
   name: string;
