@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CivicDesk Design Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary-50:#EAF1F8; --primary-100:#CFE0EF; --primary-200:#9DC0DE; --primary-300:#6B9FCB;
+  --primary-400:#3F7CAE; --primary-500:#235C8C; --primary-600:#123A63; --primary-700:#0D2B4A;
+  --primary-800:#091E35; --primary-900:#061524;
+  --n-50:#F4F7F9; --n-100:#E7EDF1; --n-200:#D3DDE4; --n-300:#B3C2CD; --n-400:#8397A6;
+  --n-500:#55697A; --n-700:#2E4351; --n-900:#101E27; --surface:#FFFFFF;
+  --open:#2F6FA8;      --open-t:#EAF1F8;
+  --progress:#8A5A00;  --progress-t:#FAF0DC;
+  --waiting:#6B4E9E;   --waiting-t:#F0EBF8;
+  --resolved:#1F6B45;  --resolved-t:#E7F2EC;
+  --reopened:#A64A14;  --reopened-t:#FBEDE4;
+  --closed:#55697A;    --closed-t:#EDF1F3;
+  --danger:#A32020;    --danger-t:#FBEAEA;
+  --accent:#F0B429;
+  --r-card:8px; --r-ctl:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Public Sans',system-ui,sans-serif;font-size:17px;line-height:1.6;
+     color:var(--n-900);background:var(--n-50);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+h1{font-size:34px;line-height:1.18;font-weight:700}
+h2{font-size:26px;line-height:1.23;font-weight:700;margin-bottom:8px}
+h3{font-size:21px;line-height:1.33;font-weight:600;margin-bottom:12px}
+p{max-width:70ch}
+.muted{color:var(--n-500);font-size:15px}
+.label{font-size:13px;line-height:1.38;font-weight:600;color:var(--n-500);
+       letter-spacing:.02em}
+code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--n-100);
+     padding:2px 6px;border-radius:4px}
+
+/* page chrome */
+.topbanner{background:var(--primary-600);color:#fff;padding:32px 0}
+.topbanner h1{color:#fff}
+.topbanner p{color:var(--primary-100);margin-top:8px}
+section.doc{padding:48px 0;border-bottom:1px solid var(--n-200)}
+.sechead{margin-bottom:24px}
+.note{background:var(--primary-50);border-left:4px solid var(--primary-600);
+      padding:12px 16px;border-radius:0 var(--r-ctl) var(--r-ctl) 0;font-size:15px;
+      margin:16px 0;max-width:70ch}
+
+/* swatches */
+.ramp{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sw{border:1px solid var(--n-200);border-radius:var(--r-card);overflow:hidden;background:#fff}
+.sw .chip{height:64px}
+.sw .meta{padding:8px 10px;font-size:13px;line-height:1.5}
+.sw .meta b{display:block;font-weight:600}
+.sw .meta span{color:var(--n-500);font-family:ui-monospace,monospace}
+
+/* type scale */
+.tsrow{display:flex;gap:24px;align-items:baseline;padding:12px 0;
+       border-bottom:1px solid var(--n-200)}
+.tsrow .k{flex:0 0 190px;font-size:13px;font-weight:600;color:var(--n-500)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+     min-height:44px;padding:0 18px;border-radius:var(--r-ctl);border:1px solid transparent;
+     font-family:inherit;font-size:17px;font-weight:600;cursor:pointer;
+     transition:background .15s,border-color .15s}
+.btn:focus-visible{outline:3px solid var(--primary-400);outline-offset:2px}
+.btn-primary{background:var(--primary-600);color:#fff}
+.btn-primary:hover{background:var(--primary-700)}
+.btn-secondary{background:#fff;color:var(--primary-600);border-color:var(--n-200)}
+.btn-secondary:hover{border-color:var(--primary-300);background:var(--primary-50)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-ghost{background:transparent;color:var(--primary-600)}
+.btn-ghost:hover{background:var(--primary-50)}
+.btn[disabled]{background:var(--primary-200);color:#fff;cursor:not-allowed;border-color:transparent}
+.btn-secondary[disabled]{background:var(--n-100);color:var(--n-300);border-color:var(--n-200)}
+.btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+
+/* form */
+.field{margin-bottom:20px;max-width:520px}
+.field > label{display:block;font-size:15px;font-weight:600;margin-bottom:4px}
+.field .help{font-size:15px;color:var(--n-500);margin-bottom:8px}
+.ctl{width:100%;min-height:44px;padding:10px 12px;font-family:inherit;font-size:17px;
+     color:var(--n-900);background:#fff;border:1px solid var(--n-200);
+     border-radius:var(--r-ctl)}
+.ctl:focus{outline:3px solid var(--primary-400);outline-offset:1px;border-color:var(--primary-400)}
+.ctl::placeholder{color:var(--n-300)}
+textarea.ctl{min-height:120px;resize:vertical;line-height:1.6}
+.field.err .ctl{border-color:var(--danger);border-width:2px}
+.errmsg{display:flex;gap:6px;align-items:flex-start;color:var(--danger);
+        font-size:15px;font-weight:600;margin-top:6px}
+.ctl[disabled]{background:var(--n-100);color:var(--n-300)}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;
+       border-radius:999px;font-size:13px;font-weight:600;letter-spacing:.01em}
+.b-open{background:var(--open-t);color:var(--open)}
+.b-progress{background:var(--progress-t);color:var(--progress)}
+.b-waiting{background:var(--waiting-t);color:var(--waiting)}
+.b-resolved{background:var(--resolved-t);color:var(--resolved)}
+.b-reopened{background:var(--reopened-t);color:var(--reopened)}
+.b-closed{background:var(--closed-t);color:var(--closed)}
+.b-danger{background:var(--danger-t);color:var(--danger)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+
+/* tracking code, the signature element */
+.tcode{display:inline-flex;align-items:center;font-family:ui-monospace,Menlo,monospace;
+       font-size:13px;font-weight:700;letter-spacing:.09em;color:var(--primary-700);
+       background:var(--primary-50);border:1px dashed var(--primary-200);
+       padding:3px 9px;border-radius:4px}
+.tcode-lg{font-size:24px;letter-spacing:.14em;padding:12px 20px;border-width:2px}
+
+/* cards */
+.card{background:#fff;border:1px solid var(--n-200);border-radius:var(--r-card)}
+.card-pad{padding:20px}
+
+/* grievance card */
+.gcard{display:flex;background:#fff;border:1px solid var(--n-200);
+       border-radius:var(--r-card);overflow:hidden;margin-bottom:12px}
+.gcard .rail{width:4px;flex:none}
+.gcard .body{padding:16px 18px;flex:1;min-width:0}
+.gcard .line1{display:flex;gap:10px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.gcard h4{font-size:21px;line-height:1.3;font-weight:600;margin-bottom:6px}
+.gcard .meta{font-size:15px;color:var(--n-500)}
+.gcard .line3{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.overdue{color:var(--danger);font-weight:600;font-size:15px}
+
+/* states */
+.state{border:1px solid var(--n-200);background:#fff;border-radius:var(--r-card);
+       padding:48px 24px;text-align:center}
+.state .ic{width:56px;height:56px;border-radius:50%;background:var(--n-100);
+           margin:0 auto 16px;display:grid;place-items:center;font-size:24px}
+.state h3{margin-bottom:6px}
+.state p{margin:0 auto 20px;color:var(--n-500);font-size:15px;max-width:44ch}
+.state.error .ic{background:var(--danger-t)}
+
+/* table */
+table{width:100%;border-collapse:collapse;background:#fff;font-size:15px}
+thead th{background:var(--n-100);text-align:left;font-size:13px;font-weight:600;
+         color:var(--n-500);padding:10px 14px;border-bottom:1px solid var(--n-200)}
+tbody td{padding:14px;border-bottom:1px solid var(--n-200);vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--n-50)}
+.tblwrap{border:1px solid var(--n-200);border-radius:var(--r-card);overflow:hidden}
+
+/* toast */
+.toast{display:flex;gap:12px;align-items:flex-start;background:#fff;
+       border:1px solid var(--n-200);border-left:4px solid var(--danger);
+       border-radius:var(--r-card);padding:14px 16px;max-width:420px;
+       box-shadow:0 8px 24px rgba(16,30,39,.12)}
+.toast.ok{border-left-color:var(--resolved)}
+.toast b{display:block;font-size:15px;font-weight:600}
+.toast p{font-size:15px;color:var(--n-500);margin-top:2px}
+
+/* mock app frame */
+.mock{border:1px solid var(--n-200);border-radius:var(--r-card);overflow:hidden;
+      background:var(--n-50);margin-top:8px}
+.mock .bar{display:flex;align-items:center;gap:12px;background:#fff;
+           border-bottom:1px solid var(--n-200);padding:0 18px;height:60px}
+.mock .brand{font-weight:700;font-size:19px;color:var(--primary-600)}
+.mock .spacer{flex:1}
+.mock .body{display:flex;min-height:520px}
+.mock .side{width:210px;flex:none;background:#fff;border-right:1px solid var(--n-200);
+            padding:16px 12px}
+.mock .side a{display:block;padding:10px 12px;border-radius:var(--r-ctl);font-size:15px;
+              color:var(--n-700);text-decoration:none;margin-bottom:2px}
+.mock .side a.on{background:var(--primary-50);color:var(--primary-600);font-weight:600}
+.mock .main{flex:1;padding:24px;min-width:0}
+.pagehead{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px}
+.pagehead .spacer{flex:1}
+.pagehead h2{margin-bottom:2px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.filters .ctl{width:auto;min-width:150px;font-size:15px;min-height:40px;padding:6px 10px}
+.bell{position:relative;width:44px;height:44px;border-radius:var(--r-ctl);
+      display:grid;place-items:center;font-size:19px}
+.bell .cnt{position:absolute;top:4px;right:4px;min-width:19px;height:19px;padding:0 5px;
+           border-radius:999px;background:var(--danger);color:#fff;font-size:11px;
+           font-weight:700;display:grid;place-items:center}
+
+/* detail two column */
+.two{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start}
+.panel{background:#fff;border:1px solid var(--n-200);border-radius:var(--r-card);
+       padding:16px 18px;margin-bottom:16px}
+.panel h3{font-size:15px;font-weight:600;color:var(--n-500);letter-spacing:.02em;
+          margin-bottom:12px}
+.kv{display:flex;justify-content:space-between;gap:16px;padding:7px 0;font-size:15px;
+    border-bottom:1px solid var(--n-100)}
+.kv:last-child{border-bottom:0}
+.kv .k{color:var(--n-500)}
+.kv .v{font-weight:600;text-align:right}
+.msg{border:1px solid var(--n-200);border-radius:var(--r-card);padding:14px 16px;
+     margin-bottom:12px;background:#fff}
+.msg .who{display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:15px}
+.msg .who b{font-weight:600}
+.msg .who .t{color:var(--n-500);font-size:13px;margin-left:auto}
+.msg.internal{background:var(--progress-t);border-color:#E8D5A8}
+.msg .flag{font-size:13px;font-weight:600;color:var(--progress);
+           display:flex;gap:6px;align-items:center;margin-bottom:8px}
+.timeline{display:flex;gap:0;margin-bottom:20px}
+.tl{flex:1;text-align:center;position:relative;padding-top:22px;font-size:13px;
+    font-weight:600;color:var(--n-400)}
+.tl::before{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);
+            width:13px;height:13px;border-radius:50%;background:var(--n-200);z-index:1}
+.tl::after{content:'';position:absolute;top:12px;left:0;width:100%;height:2px;
+           background:var(--n-200)}
+.tl.done{color:var(--primary-600)}
+.tl.done::before{background:var(--primary-600)}
+.tl.done::after{background:var(--primary-600)}
+.tl.now::before{background:var(--primary-600);box-shadow:0 0 0 4px var(--primary-100)}
+.tl:first-child::after{left:50%;width:50%}
+.tl:last-child::after{width:50%}
+
+.stars{display:flex;gap:6px}
+.star{width:44px;height:44px;border:1px solid var(--n-200);border-radius:var(--r-ctl);
+      background:#fff;font-size:21px;color:var(--n-300);display:grid;place-items:center;
+      cursor:pointer}
+.star.on{color:var(--accent);border-color:var(--accent);background:#FFFBF0}
+.chip{display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:999px;
+      background:var(--n-100);color:var(--n-700);font-size:13px;font-weight:600;
+      margin:0 6px 6px 0}
+.grey{filter:grayscale(1)}
+.two-up{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:820px){.two,.two-up{grid-template-columns:1fr}.mock .side{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topbanner">
+  <div class="wrap">
+    <h1>CivicDesk Design Reference</h1>
+    <p>Open this file in a browser. Everything you build should look like what is on this page.
+       Copy the tokens, copy the component shapes, copy the spacing.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+<section class="doc">
+  <div class="sechead"><h2>How to use this file</h2></div>
+  <p>This is the single visual source of truth for the CivicDesk frontend. It pairs with
+     Section 16 of the build plan, which explains <em>why</em> each colour was chosen.
+     This file shows <em>what</em> everything looks like.</p>
+  <div class="note">
+    <b>Rule.</b> If you are about to invent a colour, a spacing value, a font size or a
+    component shape that is not on this page, stop and ask the lead instead. Consistency
+    across three people is worth more than any individual improvement.
+  </div>
+  <p class="muted">Every value below is a CSS variable. In the real project they live in
+     <code>src/app/globals.css</code> and are used through Tailwind. Never write a raw hex
+     in a component.</p>
+</section>
+
+<section class="doc">
+  <div class="sechead">
+    <h2>Colour</h2>
+    <p class="muted">Brand hue 211 degrees. Neutrals are the same hue desaturated, not grey.
+       Accent amber 38 degrees is the complement of 211 and is reserved for missed deadlines only.</p>
+  </div>
+
+  <h3>Primary ramp</h3>
+  <div class="ramp" style="margin-bottom:32px">
+    <div class="sw"><div class="chip" style="background:var(--primary-50)"></div><div class="meta"><b>primary-50</b><span>#EAF1F8</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-100)"></div><div class="meta"><b>primary-100</b><span>#CFE0EF</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-200)"></div><div class="meta"><b>primary-200</b><span>#9DC0DE</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-300)"></div><div class="meta"><b>primary-300</b><span>#6B9FCB</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-400)"></div><div class="meta"><b>primary-400</b><span>#3F7CAE</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-500)"></div><div class="meta"><b>primary-500</b><span>#235C8C</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-600)"></div><div class="meta"><b>primary-600 base</b><span>#123A63</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-700)"></div><div class="meta"><b>primary-700 hover</b><span>#0D2B4A</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-800)"></div><div class="meta"><b>primary-800</b><span>#091E35</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-900)"></div><div class="meta"><b>primary-900</b><span>#061524</span></div></div>
+  </div>
+
+  <h3>Neutral ramp</h3>
+  <div class="ramp" style="margin-bottom:32px">
+    <div class="sw"><div class="chip" style="background:var(--n-50)"></div><div class="meta"><b>n-50 canvas</b><span>#F4F7F9</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-100)"></div><div class="meta"><b>n-100</b><span>#E7EDF1</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-200)"></div><div class="meta"><b>n-200 borders</b><span>#D3DDE4</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-300)"></div><div class="meta"><b>n-300</b><span>#B3C2CD</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-400)"></div><div class="meta"><b>n-400 icons</b><span>#8397A6</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-500)"></div><div class="meta"><b>n-500 secondary</b><span>#55697A</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-700)"></div><div class="meta"><b>n-700</b><span>#2E4351</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--n-900)"></div><div class="meta"><b>n-900 body text</b><span>#101E27</span></div></div>
+  </div>
+
+  <h3>Status colours and their badges</h3>
+  <div class="btnrow" style="margin-bottom:16px">
+    <span class="badge b-open"><i class="dot"></i>Open</span>
+    <span class="badge b-progress"><i class="dot"></i>In progress</span>
+    <span class="badge b-waiting"><i class="dot"></i>Waiting for your reply</span>
+    <span class="badge b-resolved"><i class="dot"></i>Resolved</span>
+    <span class="badge b-reopened"><i class="dot"></i>Reopened</span>
+    <span class="badge b-closed"><i class="dot"></i>Closed</span>
+  </div>
+  <p class="muted">Text colours in order: #2F6FA8, #8A5A00, #6B4E9E, #1F6B45, #A64A14, #55697A.
+     Every pair above clears 4.5:1 contrast. Every badge carries a word, never colour alone.</p>
+
+  <h3 style="margin-top:28px">Priority</h3>
+  <div class="btnrow">
+    <span class="badge b-closed">Low</span>
+    <span class="badge b-open">Medium</span>
+    <span class="badge b-progress">High</span>
+    <span class="badge b-danger">Urgent</span>
+  </div>
+
+  <div class="note" style="margin-top:28px">
+    <b>The greyscale test.</b> The same badges with all colour removed. Every status is still
+    readable, which is what makes the interface work for colour blind users and printouts.
+  </div>
+  <div class="btnrow grey">
+    <span class="badge b-open"><i class="dot"></i>Open</span>
+    <span class="badge b-progress"><i class="dot"></i>In progress</span>
+    <span class="badge b-resolved"><i class="dot"></i>Resolved</span>
+    <span class="badge b-danger"><i class="dot"></i>Urgent</span>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="sechead"><h2>Type</h2>
+    <p class="muted">Public Sans, weights 400, 600, 700. Body is 17px because many users are older.</p></div>
+  <div class="tsrow"><div class="k">Page title 34 / 700</div><div style="font-size:34px;line-height:1.18;font-weight:700">Report a problem</div></div>
+  <div class="tsrow"><div class="k">Section 26 / 700</div><div style="font-size:26px;line-height:1.23;font-weight:700">My complaints</div></div>
+  <div class="tsrow"><div class="k">Card title 21 / 600</div><div style="font-size:21px;line-height:1.33;font-weight:600">Street light not working on Road 12</div></div>
+  <div class="tsrow"><div class="k">Body 17 / 400</div><div style="font-size:17px;line-height:1.6">The light outside house 44 has been out for two weeks.</div></div>
+  <div class="tsrow"><div class="k">Secondary 15 / 400</div><div style="font-size:15px;color:var(--n-500)">Submitted 12 Sep 2026, 3:40 PM</div></div>
+  <div class="tsrow"><div class="k">Label 13 / 600</div><div class="label">OFFICER HANDLING THIS</div></div>
+</section>
+
+<section class="doc">
+  <div class="sechead"><h2>Buttons</h2>
+    <p class="muted">Minimum height 44px. One primary button per screen. Labels say what happens.</p></div>
+  <div class="btnrow" style="margin-bottom:16px">
+    <button class="btn btn-primary">Submit complaint</button>
+    <button class="btn btn-secondary">Cancel</button>
+    <button class="btn btn-danger">Delete department</button>
+    <button class="btn btn-ghost">View all</button>
+  </div>
+  <div class="btnrow">
+    <button class="btn btn-primary" disabled>Sending...</button>
+    <button class="btn btn-secondary" disabled>Unavailable</button>
+  </div>
+  <div class="note">Never write "OK", "Submit" or "Yes". Write "Mark as resolved",
+    "Send reply", "Delete department".</div>
+</section>
+
+<section class="doc">
+  <div class="sechead"><h2>Form fields</h2>
+    <p class="muted">Label above the field and always visible. Help text under the label.
+       Errors under the field, in words, saying what to do.</p></div>
+  <div class="two-up">
+    <div>
+      <div class="field">
+        <label for="f1">Title</label>
+        <div class="help">A short summary, for example "Street light not working".</div>
+        <input class="ctl" id="f1" value="Street light not working on Road 12">
+      </div>
+      <div class="field">
+        <label for="f2">Category</label>
+        <div class="help">Choosing a category decides which department handles this.</div>
+        <select class="ctl" id="f2"><option>Street lighting</option></select>
+        <div class="muted" style="margin-top:6px">Goes to <b>Public Works Department</b></div>
+      </div>
+      <div class="field">
+        <label for="f3">Description</label>
+        <textarea class="ctl" id="f3">The light outside house 44 has been out for two weeks. The road is dark at night.</textarea>
+      </div>
+    </div>
+    <div>
+      <div class="field err">
+        <label for="f4">Title</label>
+        <div class="help">A short summary, for example "Street light not working".</div>
+        <input class="ctl" id="f4" value="Bro" aria-invalid="true">
+        <div class="errmsg"><span>!</span><span>Please make the title at least 5 characters so officers can find it.</span></div>
+      </div>
+      <div class="field err">
+        <label for="f5">Ward</label>
+        <select class="ctl" id="f5" aria-invalid="true"><option>Choose a ward</option></select>
+        <div class="errmsg"><span>!</span><span>Please choose the ward where the problem is.</span></div>
+      </div>
+      <div class="field">
+        <label for="f6">Tracking code</label>
+        <input class="ctl" id="f6" value="CD-2026-0912-4471" disabled>
+        <div class="help" style="margin-top:6px;margin-bottom:0">Generated automatically. It cannot be changed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="sechead"><h2>The tracking code</h2>
+    <p class="muted">The one place the design is bold. This is the thing a citizen actually keeps,
+       so it is treated like a stamped docket number and repeated wherever the complaint appears.</p></div>
+  <div class="btnrow" style="align-items:center">
+    <span class="tcode">CD-2026-0912-4471</span>
+    <span class="muted">inline, on cards and in lists</span>
+  </div>
+  <div style="margin-top:20px">
+    <span class="tcode tcode-lg">CD-2026-0912-4471</span>
+    <div class="muted" style="margin-top:8px">large, on the submit confirmation screen only</div>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="sechead"><h2>Grievance card</h2>
+    <p class="muted">The most repeated component in the app. Structure comes from the 1px border
+       and the 4px status rail on the left, never from a drop shadow.</p></div>
+
+  <div class="gcard">
+    <div class="rail" style="background:var(--open)"></div>
+    <div class="body">
+      <div class="line1">
+        <span class="tcode">CD-2026-0912-4471</span>
+        <span class="badge b-open"><i class="dot"></i>Open</span>
+      </div>
+      <h4>Street light not working on Road 12</h4>
+      <div class="meta">Street lighting &nbsp;·&nbsp; Ward 7 &nbsp;·&nbsp; Public Works Department</div>
+      <div class="line3">
+        <span class="badge b-open">Medium</span>
+        <span class="muted">Submitted 12 Sep 2026 &nbsp;·&nbsp; Due in 2 days</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gcard">
+    <div class="rail" style="background:var(--progress)"></div>
+    <div class="body">
+      <div class="line1">
+        <span class="tcode">CD-2026-0908-1180</span>
+        <span class="badge b-progress"><i class="dot"></i>In progress</span>
+      </div>
+      <h4>Overflowing drain beside the school gate</h4>
+      <div class="meta">Drainage &nbsp;·&nbsp; Ward 3 &nbsp;·&nbsp; Sanitation Department</div>
+      <div class="line3">
+        <span class="badge b-danger">Urgent</span>
+        <span class="overdue">Past the deadline</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gcard">
+    <div class="rail" style="background:var(--resolved)"></div>
+    <div class="body">
+      <div class="line1">
+        <span class="tcode">CD-2026-0821-0093</span>
+        <span class="badge b-resolved"><i class="dot"></i>Resolved</span>
+      </div>
+      <h4>Pothole outside the community clinic</h4>
+      <div class="meta">Roads &nbsp;·&nbsp; Ward 7 &nbsp;·&nbsp; Public Works Department</div>
+      <div class="line3">
+        <span class="badge b-closed">Low</span>
+        <span class="muted">Resolved 30 Aug 2026 &nbsp;·&nbsp; Not yet rated</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="sechead"><h2>The four states</h2>
+    <p class="muted">Every screen needs all four. A screen that only handles the normal case is not finished.</p></div>
+  <div class="two-up">
+    <div>
+      <h3>Empty</h3>
+      <div class="state">
+        <div class="ic">📄</div>
+        <h3>No complaints yet</h3>
+        <p>When you report a problem it will appear here with a tracking code.</p>
+        <button class="btn btn-primary">Report a problem</button>
+      </div>
+    </div>
+    <div>
+      <h3>Error</h3>
+      <div class="state error">
+        <div class="ic">!</div>
+        <h3>We could not load your complaints</h3>
+        <p>Something went wrong on our side. Please try again in a moment.</p>
+        <button class="btn btn-secondary">Try again</button>
+      </div>
+    </div>
+  </div>
+  <div class="two-up" style="margin-top:24px">
+    <div>
+      <h3>Loading</h3>
+      <div class="card card-pad">
+        <div style="height:16px;width:40%;background:var(--n-100);border-radius:4px;margin-bottom:12px"></div>
+        <div style="height:14px;width:80%;background:var(--n-100);border-radius:4px;margin-bottom:8px"></div>
+        <div style="height:14px;width:60%;background:var(--n-100);border-radius:4px"></div>
+      </div>
+      <p class="muted" style="margin-top:8px">Skeleton blocks in n-100, matching the real layout.
+        Never a bare spinner on a full page.</p>
+    </div>
+    <div>
+      <h3>Messages</h3>
+      <div class="toast ok" style="margin-bottom:12px">
+        <span>✓</span><div><b>Your complaint has been received</b><p>Tracking code CD-2026-0912-4471</p></div>
+      </div>
+      <div class="toast">
+        <span>!</span><div><b>You do not have permission to do this</b><p>This complaint is outside your department or ward.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="sechead"><h2>Screen: complaint list</h2>
+    <p class="muted">Owned by Track 1. Same page for all three roles, different heading and
+       different filters. The backend decides which rows come back.</p></div>
+  <div class="mock">
+    <div class="bar">
+      <span class="brand">CivicDesk</span>
+      <span class="spacer"></span>
+      <span class="bell">🔔<span class="cnt">3</span></span>
+      <span class="muted">Rezwoan · Citizen</span>
+    </div>
+    <div class="body">
+      <div class="side">
+        <a class="on" href="#">My complaints</a>
+        <a href="#">Report a problem</a>
+        <a href="#">Notifications</a>
+      </div>
+      <div class="main">
+        <div class="pagehead">
+          <div><h2>My complaints</h2><p class="muted">3 complaints</p></div>
+          <span class="spacer"></span>
+          <button class="btn btn-primary">Report a problem</button>
+        </div>
+        <div class="filters">
+          <input class="ctl" placeholder="Search complaints" style="min-width:220px">
+          <select class="ctl"><option>All statuses</option></select>
+          <select class="ctl"><option>All categories</option></select>
+        </div>
+        <div class="gcard">
+          <div class="rail" style="background:var(--open)"></div>
+          <div class="body">
+            <div class="line1"><span class="tcode">CD-2026-0912-4471</span><span class="badge b-open"><i class="dot"></i>Open</span></div>
+            <h4>Street light not working on Road 12</h4>
+            <div class="meta">Street lighting · Ward 7</div>
+            <div class="line3"><span class="badge b-open">Medium</span><span class="muted">Due in 2 days</span></div>
+          </div>
+        </div>
+        <div class="gcard">
+          <div class="rail" style="background:var(--waiting)"></div>
+          <div class="body">
+            <div class="line1"><span class="tcode">CD-2026-0908-1180</span><span class="badge b-waiting"><i class="dot"></i>Waiting for your reply</span></div>
+            <h4>Overflowing drain beside the school gate</h4>
+            <div class="meta">Drainage · Ward 3</div>
+            <div class="line3"><span class="badge b-danger">Urgent</span><span class="muted">An officer asked you a question</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="sechead"><h2>Screen: complaint detail, officer view</h2>
+    <p class="muted">Owned by Track 1. The centre of the demo. Note the internal note styling
+       and that Track 3's panels sit in the right column.</p></div>
+  <div class="mock">
+    <div class="bar">
+      <span class="brand">CivicDesk</span><span class="spacer"></span>
+      <span class="bell">🔔<span class="cnt">1</span></span>
+      <span class="muted">Officer · Public Works</span>
+    </div>
+    <div class="body">
+      <div class="side">
+        <a class="on" href="#">Work queue</a>
+        <a href="#">Notifications</a>
+      </div>
+      <div class="main">
+        <div class="line1" style="display:flex;gap:10px;align-items:center;margin-bottom:8px">
+          <span class="tcode">CD-2026-0912-4471</span>
+          <span class="badge b-progress"><i class="dot"></i>In progress</span>
+          <span class="badge b-open">Medium</span>
+        </div>
+        <h2 style="margin-bottom:16px">Street light not working on Road 12</h2>
+
+        <div class="timeline">
+          <div class="tl done">Open</div>
+          <div class="tl done now">In progress</div>
+          <div class="tl">Resolved</div>
+          <div class="tl">Closed</div>
+        </div>
+
+        <div class="two">
+          <div>
+            <div class="panel">
+              <h3>WHAT THE CITIZEN REPORTED</h3>
+              <p style="font-size:17px">The light outside house 44 has been out for two weeks.
+                 The road is completely dark at night and it feels unsafe.</p>
+            </div>
+
+            <div class="msg">
+              <div class="who"><b>Public Works Officer</b><span class="t">12 Sep, 4:10 PM</span></div>
+              <p>Thank you for reporting this. We have scheduled a team to inspect the pole tomorrow morning.</p>
+            </div>
+
+            <div class="msg internal">
+              <div class="flag">🔒 Internal note, not visible to the citizen</div>
+              <div class="who"><b>Public Works Officer</b><span class="t">12 Sep, 4:12 PM</span></div>
+              <p>Third report on this pole this month. Ask stores whether the replacement unit arrived.</p>
+            </div>
+
+            <div class="panel">
+              <div class="btnrow" style="margin-bottom:12px">
+                <span class="badge b-open">Public reply</span>
+                <span class="badge b-closed">Internal note</span>
+                <span class="spacer" style="flex:1"></span>
+                <select class="ctl" style="width:auto;min-height:36px;font-size:15px;padding:4px 8px"><option>Insert a template</option></select>
+              </div>
+              <textarea class="ctl" placeholder="Write your reply. The citizen will see this."></textarea>
+              <div class="btnrow" style="margin-top:12px">
+                <button class="btn btn-primary">Send reply</button>
+                <button class="btn btn-secondary">Ask citizen for information</button>
+                <button class="btn btn-secondary">Mark as resolved</button>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="panel">
+              <h3>DETAILS</h3>
+              <div class="kv"><span class="k">Category</span><span class="v">Street lighting</span></div>
+              <div class="kv"><span class="k">Department</span><span class="v">Public Works</span></div>
+              <div class="kv"><span class="k">Ward</span><span class="v">Ward 7</span></div>
+              <div class="kv"><span class="k">Officer</span><span class="v">You</span></div>
+              <div class="kv"><span class="k">Submitted</span><span class="v">12 Sep 2026</span></div>
+              <div class="kv"><span class="k">Reply due</span><span class="v">Met</span></div>
+              <div class="kv"><span class="k">Resolution due</span><span class="v">14 Sep, 5:00 PM</span></div>
+            </div>
+            <div class="panel">
+              <h3>TAGS <span class="muted" style="font-weight:400">Track 3</span></h3>
+              <span class="chip">Repeat issue</span><span class="chip">Night safety</span>
+              <button class="btn btn-ghost" style="min-height:36px;padding:0 10px;font-size:15px">Edit tags</button>
+            </div>
+            <div class="panel">
+              <h3>FILES <span class="muted" style="font-weight:400">Track 3</span></h3>
+              <div class="kv"><span class="k">pole-photo.jpg</span><span class="v">1.2 MB</span></div>
+              <div class="muted" style="margin-top:10px">Photos and PDFs up to 5MB.</div>
+              <button class="btn btn-secondary" style="min-height:38px;font-size:15px;margin-top:10px">Choose file</button>
+            </div>
+            <div class="panel">
+              <h3>HOW WAS THE SERVICE <span class="muted" style="font-weight:400">Track 3</span></h3>
+              <div class="stars">
+                <span class="star on">★</span><span class="star on">★</span><span class="star on">★</span>
+                <span class="star">★</span><span class="star">★</span>
+              </div>
+              <div class="muted" style="margin-top:8px">Shown to the citizen once resolved.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="sechead"><h2>Screen: admin CRUD</h2>
+    <p class="muted">Owned by Track 2. Departments, wards, categories, SLA policies and staff
+       all use exactly this shape. Build it once as CrudTable and CrudModal, reuse it five times.</p></div>
+  <div class="mock">
+    <div class="bar">
+      <span class="brand">CivicDesk</span><span class="spacer"></span>
+      <span class="bell">🔔</span><span class="muted">Admin</span>
+    </div>
+    <div class="body">
+      <div class="side">
+        <a href="#">All complaints</a>
+        <a href="#">Analytics</a>
+        <a href="#">Departments</a>
+        <a href="#">Wards</a>
+        <a class="on" href="#">Categories</a>
+        <a href="#">SLA policies</a>
+        <a href="#">Staff</a>
+      </div>
+      <div class="main">
+        <div class="pagehead">
+          <div><h2>Categories</h2><p class="muted">Every category belongs to one department. 8 categories.</p></div>
+          <span class="spacer"></span>
+          <button class="btn btn-primary">Add category</button>
+        </div>
+        <div class="filters">
+          <select class="ctl"><option>All departments</option></select>
+          <select class="ctl"><option>Active only</option></select>
+        </div>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>NAME</th><th>DEPARTMENT</th><th>STATUS</th><th>COMPLAINTS</th><th></th></tr></thead>
+            <tbody>
+              <tr><td><b>Street lighting</b></td><td>Public Works</td><td><span class="badge b-resolved">Active</span></td><td>34</td>
+                  <td style="text-align:right"><button class="btn btn-ghost" style="min-height:36px;font-size:15px">Edit</button></td></tr>
+              <tr><td><b>Drainage</b></td><td>Sanitation</td><td><span class="badge b-resolved">Active</span></td><td>21</td>
+                  <td style="text-align:right"><button class="btn btn-ghost" style="min-height:36px;font-size:15px">Edit</button></td></tr>
+              <tr><td><b>Illegal parking</b></td><td>Traffic</td><td><span class="badge b-closed">Retired</span></td><td>9</td>
+                  <td style="text-align:right"><button class="btn btn-ghost" style="min-height:36px;font-size:15px">Edit</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="muted" style="margin-top:12px">Retiring a category hides it from citizens but keeps
+          existing complaints intact. Deleting is only possible when no complaint uses it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="sechead"><h2>Spacing and shape</h2></div>
+  <p class="muted" style="margin-bottom:16px">Only these values. Nothing in between.</p>
+  <div class="btnrow" style="align-items:flex-end">
+    <div><div style="width:4px;height:4px;background:var(--primary-600)"></div><div class="label" style="margin-top:8px">4</div></div>
+    <div><div style="width:8px;height:8px;background:var(--primary-600)"></div><div class="label" style="margin-top:8px">8</div></div>
+    <div><div style="width:12px;height:12px;background:var(--primary-600)"></div><div class="label" style="margin-top:8px">12</div></div>
+    <div><div style="width:16px;height:16px;background:var(--primary-600)"></div><div class="label" style="margin-top:8px">16</div></div>
+    <div><div style="width:24px;height:24px;background:var(--primary-600)"></div><div class="label" style="margin-top:8px">24</div></div>
+    <div><div style="width:32px;height:32px;background:var(--primary-600)"></div><div class="label" style="margin-top:8px">32</div></div>
+    <div><div style="width:48px;height:48px;background:var(--primary-600)"></div><div class="label" style="margin-top:8px">48</div></div>
+  </div>
+  <div class="note" style="margin-top:24px">
+    Radius: 8px on cards and panels, 6px on buttons and inputs, 999px on badges only.
+    Borders: 1px n-200 everywhere. Shadows only on modals and dropdowns, because those
+    genuinely float above the page. Everything else uses a border.
+  </div>
+</section>
+
+<section class="doc" style="border-bottom:0">
+  <div class="sechead"><h2>Checklist before you open a pull request</h2></div>
+  <ul style="max-width:70ch;padding-left:20px;line-height:2">
+    <li>No raw hex, font size or spacing value anywhere except globals.css</li>
+    <li>Loading, empty, error and normal states all built and all tested</li>
+    <li>Every label above its field and visible while typing</li>
+    <li>Field errors under the field, in plain words, saying what to do next</li>
+    <li>One primary button on the screen, and its label says what happens</li>
+    <li>Every tap target at least 44 by 44 pixels</li>
+    <li>Tab through the whole screen, focus ring visible on every stop</li>
+    <li>Screen checked at 390px width</li>
+    <li>Greyscale screenshot still readable</li>
+    <li>No status code, no server jargon, no stack trace visible to the user</li>
+  </ul>
+</section>
+
+</div>
+</body>
+</html>

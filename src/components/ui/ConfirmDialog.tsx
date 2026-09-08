@@ -9,6 +9,7 @@ type ConfirmDialogProps = {
   description: string;
   confirmLabel: string;
   loading?: boolean;
+  error?: string;
   tone?: "primary" | "danger";
   onConfirm: () => void;
   onCancel: () => void;
@@ -20,6 +21,7 @@ export default function ConfirmDialog({
   description,
   confirmLabel,
   loading = false,
+  error,
   tone = "danger",
   onConfirm,
   onCancel,
@@ -41,6 +43,16 @@ export default function ConfirmDialog({
           </Button>
         </>
       }
-    />
+    >
+      {error && (
+        <p
+          role="alert"
+          className="flex items-start gap-2 rounded-ctl border border-danger bg-danger-tint p-3 text-secondary font-semibold text-danger"
+        >
+          <span aria-hidden="true">!</span>
+          <span>{error}</span>
+        </p>
+      )}
+    </Modal>
   );
 }
