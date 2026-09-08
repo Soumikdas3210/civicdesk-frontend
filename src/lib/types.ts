@@ -47,6 +47,15 @@ export type StaffUser = {
   createdAt: string;
 };
 
+export type GrievanceAction =
+  | "START"
+  | "REQUEST_INFO"
+  | "CITIZEN_REPLY"
+  | "RESOLVE"
+  | "CLOSE"
+  | "REOPEN"
+  | "RESUME";
+
 export type Grievance = {
   id: string;
   trackingCode: string;
@@ -71,6 +80,27 @@ export type Grievance = {
   createdAt: string;
   updatedAt: string;
   tags: Tag[];
+  availableActions?: GrievanceAction[];
+};
+
+export type Message = {
+  id: string;
+  grievanceId: string;
+  authorId: string;
+  body: string;
+  isInternal: boolean;
+  createdAt: string;
+};
+
+export type AuditLogEntry = {
+  id: string;
+  grievanceId: string;
+  actorId: string | null;
+  action: string;
+  fromStatus: GrievanceStatus | null;
+  toStatus: GrievanceStatus | null;
+  metadata: Record<string, unknown> | null;
+  createdAt: string;
 };
 
 export type Paginated<T> = {

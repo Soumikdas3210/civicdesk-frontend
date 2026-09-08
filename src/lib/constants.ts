@@ -1,4 +1,5 @@
 import type { BadgeTone } from "@/components/ui/Badge";
+import type { GrievanceAction } from "./types";
 
 export type GrievanceStatus =
   | "OPEN"
@@ -76,4 +77,30 @@ export const STATUS_RAIL: Record<GrievanceStatus, string> = {
   RESOLVED: "bg-resolved",
   REOPENED: "bg-reopened",
   CLOSED: "bg-closed",
+};
+
+export const ACTION_LABEL: Record<GrievanceAction, string> = {
+  START: "Start work",
+  REQUEST_INFO: "Ask the citizen for information",
+  CITIZEN_REPLY: "Reply",
+  RESOLVE: "Mark as resolved",
+  CLOSE: "Close this complaint",
+  REOPEN: "Reopen this complaint",
+  RESUME: "Resume work",
+};
+
+export const TIMELINE_STEPS = [
+  "Open",
+  "In progress",
+  "Resolved",
+  "Closed",
+] as const;
+
+export const TIMELINE_INDEX: Record<GrievanceStatus, number> = {
+  OPEN: 0,
+  IN_PROGRESS: 1,
+  WAITING_ON_CITIZEN: 1,
+  REOPENED: 1,
+  RESOLVED: 2,
+  CLOSED: 3,
 };
