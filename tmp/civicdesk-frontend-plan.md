@@ -9,7 +9,7 @@ and the **modal design** (its Section 33.9). Everything current lives here.
 - **Owner:** solo build (one person)
 - **Backend:** `../civicdesk-backend`, NestJS, `:3000`, Swagger at `/api`
 - **Frontend:** Next.js 16 App Router + TypeScript + Tailwind v4, `:3001`
-- **Last updated:** 2026-09-07
+- **Last updated:** 2026-09-08
 
 ---
 
@@ -136,8 +136,11 @@ the `GET /:id` (cheap bare entity) to refresh, **except staff** (Section 6, W-ST
   No count column (A3). **No delete** (no endpoint). One-line note above the
   table: "Wards cannot be deleted because complaints are linked to them."
 - **Create/Edit form:** `name` (required, min 1), `code` (required, min 1).
-  `POST /wards` / `GET /wards/:id` + `PATCH /wards/:id`.
+  `POST /wards` + `PATCH /wards/:id`. `GET /wards/:id` **not used** (same bare
+  row as the list; keyed-remount form needs no refresh; S1 precedent).
 - 409 (duplicate code) -> "A ward with code {code} already exists."
+- No delete: one muted line above the table. Trim name and code, no forced
+  uppercase. Actions cell has Edit only.
 
 ### T2.3 Categories  `/admin/categories`
 - **List:** `GET /categories` with `?departmentId=` (filter) and
@@ -251,7 +254,8 @@ the `GET /:id` (cheap bare entity) to refresh, **except staff** (Section 6, W-ST
       [x] `PATCH /departments/:id`  [x] `DELETE /departments/:id`
 - [~] `GET /departments/:id` -> not used: returns data identical to the list row,
       and calling it in an effect tripped `react-hooks/set-state-in-effect`.
-- [ ] `POST /wards`  [ ] `GET /wards`  [ ] `GET /wards/:id`  [ ] `PATCH /wards/:id`
+- [x] `POST /wards`  [x] `GET /wards`  [x] `PATCH /wards/:id`
+- [~] `GET /wards/:id` -> not used: same bare row as the list (S1 precedent).
 - [ ] `GET /wards/:id/officers` -> **not used in Track 2** (was for grievance assign)
 - [ ] `POST /categories`  [ ] `GET /categories`  [ ] `GET /categories/:id`
       [ ] `PATCH /categories/:id`  [ ] `DELETE /categories/:id`
@@ -282,7 +286,7 @@ the `GET /:id` (cheap bare entity) to refresh, **except staff** (Section 6, W-ST
 |---|---|---|
 | S0 | DONE (committed). `AdminGuard` + wired into `admin/layout.tsx` and `analytics/layout.tsx`. `src/app/admin/page.tsx` redirects to `/admin/departments`. | - |
 | S1 | DONE (awaiting user test/commit). T2.1 Departments: table, add/edit modal, delete + 409 copy, 4 states, toasts. Categories count via one `GET /categories?includeInactive=true`. Notes below. | S0 |
-| S2 | T2.2 Wards: table, add/edit, no delete + note. | S1 |
+| S2 | DONE (awaiting user test/commit). T2.2 Wards: table, add/edit modal, no delete + note, 4 states, toasts, 409 duplicate-code copy. New: `src/lib/schemas/ward.ts`, `src/components/admin/WardForm.tsx`. Rewrote the `wards/page.tsx` stub. No shared file touched. | S1 |
 | S3 | T2.3 Categories: `Checkbox` primitive, department filter, show-retired toggle, Active/retire toggle. | S1 |
 | S4 | T2.4 SLA policies: grouped-by-category table, duplicate-pair 409 copy, fallback note. | S1, S3 |
 | S5 | T2.5 Staff: list + role/department filters + pagination; Add modal; Manage modal (department, replace-all ward checkboxes starting blank, one-way deactivate). | S1, S3 |
@@ -324,6 +328,11 @@ across S1 to S3, not built speculatively in S0.
 
 ## 11. Changelog
 
+- **2026-09-08**: S2 Wards built. New: `src/lib/schemas/ward.ts`,
+  `src/components/admin/WardForm.tsx` (keyed-remount form, mirrors
+  `DepartmentForm`). Rewrote `src/app/admin/wards/page.tsx` (was a stub). No
+  shared file modified. `GET /wards/:id` intentionally not used (Section 7).
+  typecheck + lint + build all clean.
 - **2026-09-08**: S1 Departments built. New: `src/lib/schemas/department.ts`,
   `src/components/admin/DepartmentForm.tsx` (form is a keyed component, reset by
   remount, so no setState-in-effect), `src/app/admin/departments/page.tsx`.
