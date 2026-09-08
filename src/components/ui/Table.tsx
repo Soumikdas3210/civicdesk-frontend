@@ -46,17 +46,17 @@ export function TR({
 export function TH({
   className,
   children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) {
+  scope = "col",
+  ...rest
+}: React.ThHTMLAttributes<HTMLTableCellElement>) {
   return (
     <th
-      scope="col"
+      scope={scope}
       className={cn(
         "border-b border-n-200 bg-n-100 px-3.5 py-2.5 text-left text-meta text-n-500",
         className,
       )}
+      {...rest}
     >
       {children}
     </th>
@@ -66,11 +66,11 @@ export function TH({
 export function TD({
   className,
   children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) {
+  ...rest
+}: React.TdHTMLAttributes<HTMLTableCellElement>) {
   return (
-    <td className={cn("px-3.5 py-3.5 align-middle", className)}>{children}</td>
+    <td className={cn("px-3.5 py-3.5 align-middle", className)} {...rest}>
+      {children}
+    </td>
   );
 }
