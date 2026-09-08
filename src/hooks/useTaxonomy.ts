@@ -15,10 +15,16 @@ export function useWards() {
   });
 }
 
-export function useCategories() {
+export function useCategories(opts?: { includeInactive?: boolean }) {
+  const includeInactive = opts?.includeInactive ?? false;
   return useQuery({
-    queryKey: qk.categories,
-    queryFn: async () => (await http.get<Category[]>("/categories")).data,
+    queryKey: qk.categories({ includeInactive }),
+    queryFn: async () =>
+      (
+        await http.get<Category[]>("/categories", {
+          params: includeInactive ? { includeInactive: true } : undefined,
+        })
+      ).data,
     staleTime: HOUR,
   });
 }

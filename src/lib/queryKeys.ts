@@ -4,7 +4,9 @@ export const qk = {
   grievance: (id: string) => ["grievance", id] as const,
   messages: (id: string) => ["messages", id] as const,
   wards: ["wards"] as const,
-  categories: ["categories"] as const,
+  categories: (opts?: { includeInactive?: boolean }) =>
+    ["categories", { includeInactive: opts?.includeInactive ?? false }] as const,
   departments: ["departments"] as const,
+  department: (id: string) => ["department", id] as const,
   tags: ["tags"] as const,
 };
