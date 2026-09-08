@@ -34,6 +34,19 @@ export type SlaPolicy = {
   resolutionDueHours: number;
 };
 
+export type StaffRole = "citizen" | "officer" | "admin";
+
+export type StaffUser = {
+  id: string;
+  email: string;
+  fullName: string;
+  phone: string | null;
+  role: StaffRole;
+  isActive: boolean;
+  departmentId: string | null;
+  createdAt: string;
+};
+
 export type Grievance = {
   id: string;
   trackingCode: string;
