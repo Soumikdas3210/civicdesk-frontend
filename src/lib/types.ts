@@ -58,3 +58,34 @@ export type Paginated<T> = {
   page: number;
   limit: number;
 };
+
+export type CannedResponse = {
+  id: string;
+  title: string;
+  body: string;
+  departmentId: string | null;
+  categoryId: string | null;
+  department?: Department | null;
+  category?: Category | null;
+  createdAt: string;
+};
+
+export type EscalationTrigger =
+  | "RESPONSE_OVERDUE"
+  | "RESOLUTION_OVERDUE"
+  | "UNASSIGNED_FOR_HOURS";
+
+export type EscalationAction = "RAISE_PRIORITY" | "NOTIFY_ADMIN";
+
+export type EscalationRule = {
+  id: string;
+  name: string;
+  isActive: boolean;
+  trigger: EscalationTrigger;
+  thresholdHours: number | null;
+  priorityFilter: Priority | null;
+  departmentId: string | null;
+  department?: Department | null;
+  action: EscalationAction;
+  targetPriority: Priority | null;
+};
