@@ -16,4 +16,6 @@ export const qk = {
   history: (id: string) => ["history", id] as const,
   analytics: (section: string) => ["analytics", section] as const,
   apiStatus: ["apiStatus"] as const,
+  cannedResponses: ["cannedResponses"] as const,
+  escalationRules: ["escalationRules"] as const,
 };
