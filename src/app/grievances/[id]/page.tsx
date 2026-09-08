@@ -18,6 +18,7 @@ import Spinner from "@/components/ui/Spinner";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useGrievance } from "@/hooks/useGrievance";
 import { errorMessage } from "@/lib/errors";
+import MessageThread from "@/components/grievances/MessageThread";
 
 export default function GrievanceDetailPage() {
   const params = useParams<{ id: string }>();
@@ -86,6 +87,18 @@ export default function GrievanceDetailPage() {
             </h3>
             <p className="whitespace-pre-wrap">{g.description}</p>
           </Card>
+          <MessageThread
+            grievanceId={g.id}
+            citizenId={g.citizenId}
+            status={g.status}
+            role={user.role}
+            currentUserId={user.id}
+            canReply={
+              user.role === "admin" ||
+              (user.role === "citizen" && g.citizenId === user.id) ||
+              (user.role === "officer" && g.assignedOfficerId === user.id)
+            }
+          />
         </div>
 
         <div className="space-y-6">
