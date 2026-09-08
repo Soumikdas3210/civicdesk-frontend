@@ -10,4 +10,6 @@ export const qk = {
   department: (id: string) => ["department", id] as const,
   tags: ["tags"] as const,
   slaPolicies: ["sla-policies"] as const,
+  users: (q: unknown) => ["users", q] as const,
+  officerWards: (userId: string) => ["officer-wards", userId] as const,
 };
