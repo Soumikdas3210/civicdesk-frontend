@@ -1,7 +1,0 @@
-
-
-
-Make proper plan file into G:\Study metarials\git\CivicDesk\civicdesk-frontend\tmp.
-next time check this file to read and update to based on new plan we add.
-
-Please discuss about any questions, doubts, concern, corner case, suggestions before start coding.
