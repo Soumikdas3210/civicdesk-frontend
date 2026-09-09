@@ -14,4 +14,5 @@ export const qk = {
   officerWards: (userId: string) => ["officer-wards", userId] as const,
   eligibleOfficers: (id: string) => ["eligibleOfficers", id] as const,
   history: (id: string) => ["history", id] as const,
+  analytics: (section: string) => ["analytics", section] as const,
 };
