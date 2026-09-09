@@ -125,6 +125,17 @@ function ManageStaffBody({
     },
   });
 
+  const activateMutation = useMutation({
+    mutationFn: async () => {
+      await http.patch(`/users/${user.id}/activate`);
+    },
+    onSuccess: () => {
+      showToast("Account reactivated.", "success");
+      onChanged();
+      onClose();
+    },
+  });
+
   const immutableLine = (
     <p className="text-secondary text-n-500">
       Name, email and phone cannot be edited here.
@@ -135,9 +146,33 @@ function ManageStaffBody({
     return (
       <div className="flex flex-col gap-3">
         <p className="text-body text-n-900">
-          This account is deactivated. There is no way to reactivate it here.
+          This account is deactivated. {user.fullName} cannot sign in.
         </p>
         {immutableLine}
+
+        <div className={SECTION}>
+          <p className="font-semibold text-n-900">Reactivate</p>
+          <p className="mt-1 text-secondary text-n-500">
+            They will be able to sign in again. Complaints they were unassigned
+            from when they were deactivated are not returned, because another
+            officer may be handling them now.
+          </p>
+
+          {activateMutation.isError && (
+            <p role="alert" className={`${PANEL} mt-3`}>
+              <span aria-hidden="true">!</span>
+              <span>{errorMessage(activateMutation.error)}</span>
+            </p>
+          )}
+
+          <Button
+            className="mt-3"
+            loading={activateMutation.isPending}
+            onClick={() => activateMutation.mutate()}
+          >
+            Reactivate {user.fullName}
+          </Button>
+        </div>
       </div>
     );
   }
@@ -200,7 +235,8 @@ function ManageStaffBody({
         <p className="mt-1 text-secondary text-n-500">
           They are signed out on their next action
           {isOfficer ? " and their open complaints return to the queue" : ""}.
-          This cannot be undone here.
+          You can reactivate them here afterwards, but the complaints are not
+          returned.
         </p>
 
         {isSelf && (
@@ -219,7 +255,7 @@ function ManageStaffBody({
         {confirming ? (
           <div className="mt-3 flex flex-col gap-3 rounded-ctl border border-n-200 bg-n-50 p-3">
             <p className="text-secondary text-n-900">
-              Deactivate {user.fullName}? This cannot be undone here.
+              Deactivate {user.fullName}?
             </p>
             <div className="flex flex-wrap gap-3">
               <Button
@@ -261,11 +297,6 @@ type WardCoverageSectionProps = {
   onSaved: () => void;
 };
 
-/**
- * The backend has no endpoint that returns an officer's current wards, so we
- * derive it: fetch each ward's officer list and keep the wards this officer
- * appears in. The result seeds the checkboxes and is re-read after a save.
- */
 function WardCoverageSection({
   userId,
   userFullName,

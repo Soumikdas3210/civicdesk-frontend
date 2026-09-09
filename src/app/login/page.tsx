@@ -56,8 +56,16 @@ function LoginForm() {
       const next = params.get("next");
       router.replace(next && next.startsWith("/") ? next : "/grievances");
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.status === 401) {
+      const status = axios.isAxiosError(error)
+        ? error.response?.status
+        : undefined;
+
+      if (status === 401) {
         setFormError("Email or password is incorrect.");
+      } else if (status === 403) {
+        setFormError(
+          "This account has been deactivated. Please contact an administrator.",
+        );
       } else {
         const fields = fieldErrors(error);
         if (Object.keys(fields).length > 0) setErrors(fields);
