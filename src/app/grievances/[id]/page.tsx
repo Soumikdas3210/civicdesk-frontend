@@ -20,6 +20,10 @@ import { useGrievance } from "@/hooks/useGrievance";
 import { errorMessage } from "@/lib/errors";
 import MessageThread from "@/components/grievances/MessageThread";
 import StatusActions from "@/components/grievances/StatusActions";
+import AssignPanel from "@/components/grievances/AssignPanel";
+import EscalatePanel from "@/components/grievances/EscalatePanel";
+import HistoryPanel from "@/components/grievances/HistoryPanel";
+import RecategorizePanel from "@/components/grievances/RecategorizePanel";
 
 export default function GrievanceDetailPage() {
   const params = useParams<{ id: string }>();
@@ -117,9 +121,21 @@ export default function GrievanceDetailPage() {
 
         <div className="space-y-6">
           <DetailsPanel grievance={g} />
+          {isStaff && (
+            <>
+              <AssignPanel
+                grievance={g}
+                role={user.role}
+                currentUserId={user.id}
+              />
+              <RecategorizePanel grievance={g} />
+              <EscalatePanel grievance={g} />
+            </>
+          )}
           <TagsPanel grievanceId={g.id} />
           <AttachmentsPanel grievanceId={g.id} />
           <RatingPanel grievanceId={g.id} />
+          {isStaff && <HistoryPanel grievanceId={g.id} enabled={isStaff} />}
         </div>
       </div>
     </>

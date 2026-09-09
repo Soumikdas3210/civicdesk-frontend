@@ -111,7 +111,7 @@ type ActionConfirmation = {
   confirmLabel: string;
 };
 
-export const ACTION_CONFIRM: Partial <
+export const ACTION_CONFIRM: Partial<
   Record<GrievanceAction, ActionConfirmation>
 > = {
   RESOLVE: {

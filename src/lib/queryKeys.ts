@@ -12,4 +12,6 @@ export const qk = {
   slaPolicies: ["sla-policies"] as const,
   users: (q: unknown) => ["users", q] as const,
   officerWards: (userId: string) => ["officer-wards", userId] as const,
+  eligibleOfficers: (id: string) => ["eligibleOfficers", id] as const,
+  history: (id: string) => ["history", id] as const,
 };
