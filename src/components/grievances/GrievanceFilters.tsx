@@ -76,7 +76,7 @@ export default function GrievanceFilters({
         <Field label="Search">
           <Input
             type="search"
-            placeholder="Title or description"
+            placeholder="Title, description or tracking code"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

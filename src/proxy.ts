@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const PUBLIC = ["/", "/about", "/login", "/register", "kitchen-sink"];
+const PROTECTED = ["/grievances", "/notifications", "/analytics", "/admin"];
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  if (PUBLIC.includes(pathname) || pathname.startsWith("/api")) {
+  const needsAuth = PROTECTED.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`),
+  );
+
+  if (!needsAuth) {
     return NextResponse.next();
   }
 

@@ -1,4 +1,5 @@
 import type { BadgeTone } from "@/components/ui/Badge";
+import type { GrievanceAction } from "./types";
 
 export type GrievanceStatus =
   | "OPEN"
@@ -76,4 +77,65 @@ export const STATUS_RAIL: Record<GrievanceStatus, string> = {
   RESOLVED: "bg-resolved",
   REOPENED: "bg-reopened",
   CLOSED: "bg-closed",
+};
+
+export const ACTION_LABEL: Record<GrievanceAction, string> = {
+  START: "Start work",
+  REQUEST_INFO: "Ask the citizen for information",
+  CITIZEN_REPLY: "Reply",
+  RESOLVE: "Mark as resolved",
+  CLOSE: "Close this complaint",
+  REOPEN: "Reopen this complaint",
+  RESUME: "Resume work",
+};
+
+export const TIMELINE_STEPS = [
+  "Open",
+  "In progress",
+  "Resolved",
+  "Closed",
+] as const;
+
+export const TIMELINE_INDEX: Record<GrievanceStatus, number> = {
+  OPEN: 0,
+  IN_PROGRESS: 1,
+  WAITING_ON_CITIZEN: 1,
+  REOPENED: 1,
+  RESOLVED: 2,
+  CLOSED: 3,
+};
+
+type ActionConfirmation = {
+  title: string;
+  description: string;
+  confirmLabel: string;
+};
+
+export const ACTION_CONFIRM: Partial<
+  Record<GrievanceAction, ActionConfirmation>
+> = {
+  RESOLVE: {
+    title: "Mark this complaint as resolved?",
+    description:
+      "The person who reported it will be told it is fixed and asked to rate the service. They can reopen it if they disagree.",
+    confirmLabel: "Mark as resolved",
+  },
+  CLOSE: {
+    title: "Close this complaint?",
+    description:
+      "Closing is final. The person who reported it will no longer be able to reopen it.",
+    confirmLabel: "Close this complaint",
+  },
+  REOPEN: {
+    title: "Reopen this complaint?",
+    description:
+      "This tells the council the problem is not fixed. A new deadline is set from today and any rating you gave is removed.",
+    confirmLabel: "Reopen this complaint",
+  },
+  REQUEST_INFO: {
+    title: "Ask the citizen for information?",
+    description:
+      "The resolution clock pauses until they reply, and they will be notified that you need something from them.",
+    confirmLabel: "Ask for information",
+  },
 };
