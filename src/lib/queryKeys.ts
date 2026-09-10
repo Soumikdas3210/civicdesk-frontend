@@ -15,4 +15,5 @@ export const qk = {
   eligibleOfficers: (id: string) => ["eligibleOfficers", id] as const,
   history: (id: string) => ["history", id] as const,
   analytics: (section: string) => ["analytics", section] as const,
+  apiStatus: ["apiStatus"] as const,
 };
