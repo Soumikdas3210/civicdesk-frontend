@@ -29,10 +29,6 @@ type StaffFormProps = {
   onValidSubmit: (values: StaffInput) => void;
 };
 
-/**
- * Add-staff form only (there is no edit path for name / email / phone).
- * Remount with a `key` to reset it.
- */
 export default function StaffForm({
   formId,
   serverError,

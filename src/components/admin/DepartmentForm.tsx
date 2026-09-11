@@ -16,10 +16,6 @@ type DepartmentFormProps = {
   onValidSubmit: (values: { name: string; description: string }) => void;
 };
 
-/**
- * Remount this with a `key` (department id, or "create") to reset it.
- * That keeps the reset logic out of an effect.
- */
 export default function DepartmentForm({
   formId,
   initial,

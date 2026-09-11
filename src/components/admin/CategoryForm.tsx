@@ -26,11 +26,8 @@ type CategoryFormProps = {
   serverError: string | null;
   onValidSubmit: (values: CategoryFormValues) => void;
 };
+ 
 
-/**
- * Remount this with a `key` (category id, or "create") to reset it.
- * That keeps the reset logic out of an effect.
- */
 export default function CategoryForm({
   formId,
   mode,
