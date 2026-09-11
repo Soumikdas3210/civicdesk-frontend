@@ -26,10 +26,6 @@ type SlaPolicyFormProps = {
   onValidSubmit: (values: SlaPolicyInput) => void;
 };
 
-/**
- * Remount this with a `key` (policy id, or "create") to reset it.
- * That keeps the reset logic out of an effect.
- */
 export default function SlaPolicyForm({
   formId,
   initial,

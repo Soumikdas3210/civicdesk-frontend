@@ -261,11 +261,7 @@ type WardCoverageSectionProps = {
   onSaved: () => void;
 };
 
-/**
- * The backend has no endpoint that returns an officer's current wards, so we
- * derive it: fetch each ward's officer list and keep the wards this officer
- * appears in. The result seeds the checkboxes and is re-read after a save.
- */
+
 function WardCoverageSection({
   userId,
   userFullName,

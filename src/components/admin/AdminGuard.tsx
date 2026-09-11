@@ -6,11 +6,6 @@ import EmptyState from "@/components/ui/EmptyState";
 import Spinner from "@/components/ui/Spinner";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 
-/**
- * Gates the admin area to admins only. Non-admins see a plain permission
- * message instead of the page. This is a convenience layer: the backend still
- * returns 403 on every admin endpoint, which is the real enforcement.
- */
 export default function AdminGuard({
   children,
 }: {

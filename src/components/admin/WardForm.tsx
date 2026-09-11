@@ -15,10 +15,6 @@ type WardFormProps = {
   onValidSubmit: (values: { name: string; code: string }) => void;
 };
 
-/**
- * Remount this with a `key` (ward id, or "create") to reset it.
- * That keeps the reset logic out of an effect.
- */
 export default function WardForm({
   formId,
   initial,

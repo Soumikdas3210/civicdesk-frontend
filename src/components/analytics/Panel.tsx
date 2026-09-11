@@ -13,7 +13,6 @@ type PanelProps = {
   children: React.ReactNode;
 };
 
-/** Shared card wrapper for an analytics widget: title + the four states. */
 export default function Panel({
   title,
   isLoading,
